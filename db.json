@@ -1,23 +1,33 @@
 {
   "policies": [
     {
-      "id": 1,
-      "policyNumber": "POL001",
-      "policyHolderName": "John Doe",
-      "policyType": "Health",
-      "premium": 5000,
-      "startDate": "2024-01-01",
-      "endDate": "2025-01-01",
-      "status": "Active"
-    },
-    {
-      "id": 2,
       "policyNumber": "POL002",
       "policyHolderName": "Jane Smith",
       "policyType": "Life",
-      "premium": 8000,
+      "premium": 8002,
       "startDate": "2024-02-15",
       "endDate": "2034-02-15",
+      "status": "Active",
+      "id": "2"
+    },
+    {
+      "id": "7e2c",
+      "policyNumber": "POL111",
+      "policyHolderName": "krishna",
+      "policyType": "Health",
+      "premium": 1000,
+      "startDate": "2026-01-20",
+      "endDate": "2028-01-20",
+      "status": "Active"
+    },
+    {
+      "id": "ecba",
+      "policyNumber": "POL001",
+      "policyHolderName": "hari",
+      "policyType": "Auto",
+      "premium": 2000,
+      "startDate": "2026-01-20",
+      "endDate": "2032-01-20",
       "status": "Active"
     }
   ]

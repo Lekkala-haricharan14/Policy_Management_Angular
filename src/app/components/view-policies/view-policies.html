@@ -1,0 +1,100 @@
+<div class="container">
+  <div class="header-section">
+    <h2>All Policies</h2>
+    
+    <!-- Statistics Cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Policies</div>
+        <div class="stat-value">{{ totalPolicies() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active Policies</div>
+        <div class="stat-value">{{ activePolicies() }}</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Premium</div>
+        <div class="stat-value">${{ totalPremium() | number:'1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="filters-section">
+    <div class="filter-group">
+      <input 
+        type="text" 
+        placeholder="Search by number, name, or type..."
+        [value]="searchTerm()"
+        (input)="onSearchChange($event)"
+        class="search-input">
+    </div>
+    
+    <div class="filter-group">
+      <select 
+        [value]="filterStatus()"
+        (change)="onFilterChange($event)"
+        class="filter-select">
+        @for (status of statusOptions(); track status) {
+          <option [value]="status">{{ status }}</option>
+        }
+      </select>
+    </div>
+    
+    @if (searchTerm() || filterStatus() !== 'All') {
+      <button class="btn btn-clear" (click)="clearFilters()">
+        Clear Filters
+      </button>
+    }
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading policies...</p>
+    </div>
+  }
+
+  <!-- Policies Grid -->
+  @if (!isLoading()) {
+    @if (filteredPolicies().length > 0) {
+      <div class="policies-grid">
+        @for (policy of filteredPolicies(); track policy.id) {
+          <div class="policy-card">
+            <div class="policy-header">
+              <h3>{{ policy.policyNumber }}</h3>
+              <span class="badge" [class.active]="policy.status === 'Active'">
+                {{ policy.status }}
+              </span>
+            </div>
+            <div class="policy-body">
+              <p><strong>Holder:</strong> {{ policy.policyHolderName }}</p>
+              <p><strong>Type:</strong> {{ policy.policyType }}</p>
+              <p><strong>Premium:</strong> ${{ policy.premium | number:'1.2-2' }}</p>
+              <p><strong>Duration:</strong> {{ policy.startDate }} to {{ policy.endDate }}</p>
+            </div>
+            <div class="policy-actions">
+              <button class="btn btn-edit" [routerLink]="['/update-policy', policy.id]">
+                Edit
+              </button>
+              <button class="btn btn-delete" (click)="deletePolicy(policy.id)">
+                Delete
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">
+        @if (searchTerm() || filterStatus() !== 'All') {
+          <p>No policies found matching your filters.</p>
+          <button class="btn btn-primary" (click)="clearFilters()">Clear Filters</button>
+        } @else {
+          <p>No policies found. Add your first policy!</p>
+          <button class="btn btn-primary" routerLink="/add-policy">Add Policy</button>
+        }
+      </div>
+    }
+  }
+</div>
