@@ -1,6 +1,5 @@
-import { Component, signal, OnInit } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { PolicyService } from '../../services/policy';
 import { Policy } from '../../models/policy.model';
@@ -8,76 +7,88 @@ import { Policy } from '../../models/policy.model';
 @Component({
   selector: 'app-add-policy',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './add-policy.html',
   styleUrls: ['./add-policy.css']
 })
-export class AddPolicyComponent implements OnInit {
-  policyForm!: FormGroup;
-  
-  // Signals
-  isSubmitting = signal<boolean>(false);
-  submitError = signal<string>('');
-  submitSuccess = signal<boolean>(false);
+export class AddPolicyComponent {
 
-  policyTypes = signal<string[]>(['Health', 'Life', 'Auto', 'Home']);
-  statuses = signal<string[]>(['Active', 'Inactive', 'Expired']);
+  // ---------------- FORM STATE ----------------
+  policyNumber = signal('');
+  policyHolderName = signal('');
+  policyType = signal('');
+  premium = signal<number>(0);
+  startDate = signal('');
+  endDate = signal('');
+  status = signal('Active');
+
+  // ---------------- UI STATE ----------------
+  isSubmitting = signal(false);
+  submitError = signal('');
+  submitSuccess = signal(false);
+
+  policyTypes = signal(['Health', 'Life', 'Auto', 'Home']);
+  statuses = signal(['Active', 'Inactive', 'Expired']);
+
+  // ---------------- VALIDATIONS ----------------
+  policyNumberError = computed(() => {
+    if (!this.policyNumber()) return 'Policy number is required';
+    if (!/^[A-Z]{3}\d{3}$/.test(this.policyNumber()))
+      return 'Format: POL001';
+    return '';
+  });
+
+  nameError = computed(() => {
+    if (!this.policyHolderName()) return 'Name is required';
+    if (this.policyHolderName().length < 3)
+      return 'Minimum 3 characters';
+    return '';
+  });
+
+  premiumError = computed(() => {
+    if (this.premium() <= 0) return 'Premium must be greater than 0';
+    return '';
+  });
+
+  isFormValid = computed(() =>
+    !this.policyNumberError() &&
+    !this.nameError() &&
+    !this.premiumError() &&
+    !!this.policyType() &&
+    !!this.startDate() &&
+    !!this.endDate()
+  );
 
   constructor(
-    private fb: FormBuilder,
     private policyService: PolicyService,
     private router: Router
   ) {}
 
-  ngOnInit() {
-    this.initForm();
-  }
-
-  initForm() {
-    this.policyForm = this.fb.group({
-      policyNumber: ['', [Validators.required, Validators.pattern(/^[A-Z]{3}\d{3}$/)]],
-      policyHolderName: ['', [Validators.required, Validators.minLength(3)]],
-      policyType: ['', Validators.required],
-      premium: [0, [Validators.required, Validators.min(1)]],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      status: ['Active', Validators.required]
-    });
-  }
-
   onSubmit() {
-    if (this.policyForm.invalid) {
-      this.policyForm.markAllAsTouched();
-      return;
-    }
+    if (!this.isFormValid()) return;
 
     this.isSubmitting.set(true);
-    this.submitError.set('');
 
-    const policyData: Policy = this.policyForm.value;
+    const policy: Policy = {
+      policyNumber: this.policyNumber(),
+      policyHolderName: this.policyHolderName(),
+      policyType: this.policyType(),
+      premium: this.premium(),
+      startDate: this.startDate(),
+      endDate: this.endDate(),
+      status: this.status()
+    };
 
-    this.policyService.addPolicy(policyData).subscribe({
+    this.policyService.addPolicy(policy).subscribe({
       next: () => {
         this.submitSuccess.set(true);
         this.isSubmitting.set(false);
-        setTimeout(() => {
-          this.router.navigate(['/view-policies']);
-        }, 1000);
+        setTimeout(() => this.router.navigate(['/view-policies']), 1000);
       },
-      error: (err) => {
-        console.error('Error adding policy:', err);
-        this.submitError.set('Failed to add policy. Please try again.');
+      error: () => {
+        this.submitError.set('Failed to add policy');
         this.isSubmitting.set(false);
       }
     });
   }
-
-  // Getter methods for form controls
-  get policyNumber() { return this.policyForm.get('policyNumber'); }
-  get policyHolderName() { return this.policyForm.get('policyHolderName'); }
-  get policyType() { return this.policyForm.get('policyType'); }
-  get premium() { return this.policyForm.get('premium'); }
-  get startDate() { return this.policyForm.get('startDate'); }
-  get endDate() { return this.policyForm.get('endDate'); }
-  get status() { return this.policyForm.get('status'); }
 }
