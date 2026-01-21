@@ -26,7 +26,7 @@ export class PolicyService {
     );
   }
 
-  getPolicyById(id: number): Observable<Policy> {
+  getPolicyById(id: string | number): Observable<Policy> {
     return this.http.get<Policy>(`${this.apiUrl}/${id}`).pipe(
       map(policy => ({
         ...policy,
@@ -44,7 +44,7 @@ export class PolicyService {
     );
   }
 
-  updatePolicy(id: number, policy: Policy): Observable<Policy> {
+  updatePolicy(id: string | number, policy: Policy): Observable<Policy> {
     return this.http.put<Policy>(`${this.apiUrl}/${id}`, policy).pipe(
       map(response => ({
         ...response,
@@ -53,7 +53,7 @@ export class PolicyService {
     );
   }
 
-  deletePolicy(id: number): Observable<void> {
+  deletePolicy(id: string | number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 

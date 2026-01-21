@@ -11,26 +11,6 @@
       "id": "2"
     },
     {
-      "id": "7e2c",
-      "policyNumber": "POL111",
-      "policyHolderName": "krishna",
-      "policyType": "Health",
-      "premium": 1000,
-      "startDate": "2026-01-20",
-      "endDate": "2028-01-20",
-      "status": "Active"
-    },
-    {
-      "id": "ecba",
-      "policyNumber": "POL001",
-      "policyHolderName": "hari",
-      "policyType": "Auto",
-      "premium": 2000,
-      "startDate": "2026-01-20",
-      "endDate": "2032-01-20",
-      "status": "Active"
-    },
-    {
       "id": "6609",
       "policyNumber": "POL001",
       "policyHolderName": "Hari",
@@ -38,6 +18,26 @@
       "premium": 11111,
       "startDate": "2026-01-20",
       "endDate": "2032-10-20",
+      "status": "Active"
+    },
+    {
+      "id": "d254",
+      "policyNumber": "POL100",
+      "policyHolderName": "hari charan",
+      "policyType": "Health",
+      "premium": 12000,
+      "startDate": "2026-01-21",
+      "endDate": "2026-12-21",
+      "status": "Active"
+    },
+    {
+      "id": "d062",
+      "policyNumber": "POL123",
+      "policyHolderName": "skc",
+      "policyType": "Auto",
+      "premium": 1000,
+      "startDate": "2026-01-21",
+      "endDate": "2030-01-21",
       "status": "Active"
     }
   ]

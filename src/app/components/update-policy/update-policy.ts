@@ -14,7 +14,7 @@ import { Policy } from '../../models/policy.model';
 })
 export class UpdatePolicyComponent implements OnInit {
   policyForm!: FormGroup;
-  policyId!: number;
+  policyId!: string;
 
   // Signals
   isLoading = signal<boolean>(true);
@@ -34,7 +34,7 @@ export class UpdatePolicyComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.policyId = Number(this.route.snapshot.paramMap.get('id'));
+    this.policyId = this.route.snapshot.paramMap.get('id') || '';
     this.loadPolicy();
   }
 
