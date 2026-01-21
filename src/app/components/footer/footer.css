@@ -1,17 +1,118 @@
 .footer {
-  background: #2d3748;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   color: white;
-  padding: 2rem 0;
+  padding: var(--space-xl) 0;
   margin-top: auto;
+  border-top: 4px solid var(--primary-gradient);
+  backdrop-filter: blur(10px);
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 var(--space-lg);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
 }
 
 .container p {
   margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container p::before {
+  content: '©';
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.container p::after {
+  content: '🛡️';
+  font-size: 1rem;
+}
+
+/* Footer Links Section */
+.footer-links {
+  display: flex;
+  gap: var(--space-lg);
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: var(--font-size-sm);
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: 4px;
+}
+
+.footer-links a:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Divider */
+.footer-divider {
+  width: 30px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 1px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: var(--space-lg) 0;
+  }
+  
+  .container {
+    padding: 0 var(--space-md);
+    gap: var(--space-md);
+  }
+  
+  .container p {
+    font-size: var(--font-size-sm);
+  }
+  
+  .footer-links {
+    gap: var(--space-sm);
+    font-size: var(--font-size-xs);
+  }
+  
+  .footer-links a {
+    padding: var(--space-xs) var(--space-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 var(--space-md);
+  }
+  
+  .container p {
+    font-size: var(--font-size-xs);
+  }
+  
+  .footer-links {
+    gap: var(--space-xs);
+    font-size: var(--font-size-xs);
+  }
+  
+  .footer-links a {
+    padding: var(--space-xs);
+  }
 }

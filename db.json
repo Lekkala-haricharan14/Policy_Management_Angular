@@ -29,6 +29,16 @@
       "startDate": "2026-01-20",
       "endDate": "2032-01-20",
       "status": "Active"
+    },
+    {
+      "id": "6609",
+      "policyNumber": "POL001",
+      "policyHolderName": "Hari",
+      "policyType": "Life",
+      "premium": 11111,
+      "startDate": "2026-01-20",
+      "endDate": "2032-10-20",
+      "status": "Active"
     }
   ]
 }

@@ -2,9 +2,30 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background: var(--bg-primary);
 }
 
 .main-content {
   flex: 1;
-  background: #f7fafc;
+  background: var(--bg-primary);
+  padding: var(--space-md);
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Padding */
+@media (max-width: 768px) {
+  .main-content {
+    padding: var(--space-sm);
+  }
 }

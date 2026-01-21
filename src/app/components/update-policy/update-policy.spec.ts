@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UpdatePolicyComponent } from './update-policy';
+import { UpdatePolicy } from './update-policy';
 
 describe('UpdatePolicy', () => {
   let component: UpdatePolicy;
